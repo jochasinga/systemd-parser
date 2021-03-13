@@ -4,7 +4,7 @@ use pest::Parser;
 use anyhow::{Context, Result};
 
 #[derive(Parser)]
-#[grammar = "systemd.pest"]
+#[grammar = "pest/systemd.pest"]
 pub struct SystemdParser;
 
 #[derive(Debug, Clone)]
