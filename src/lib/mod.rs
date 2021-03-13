@@ -89,4 +89,41 @@ mod test {
 	    assert!(false);
 	}
     }
+
+    #[test]
+    fn test_parse_systemd_list() {
+	let mut dir = current_dir().unwrap();
+	dir.push("unit_files");
+	dir.push("cardano-node.service");
+	let filepath = dir.to_str().unwrap();
+	if let Ok(p) = parse(filepath) {
+	    let section = p.get(&String::from("Service")).unwrap();
+	    let test_pairs = vec![
+		(
+		    section.get(&String::from("Environment")).unwrap(),
+		    vec![
+			String::from(
+			    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/home/ec2-user/.local/bin"
+			),
+			String::from(
+			    "LD_LIBRARY_PATH=/usr/local/lib"
+			),
+			String::from(
+			    "PKG_CONFIG_PATH=/usr/local/lib/pkgconfig"
+			),
+		    ],
+		),
+	    ];
+	    for tp in test_pairs.into_iter() {
+		match tp {
+		    (SystemdValue::List(ls), expect) => {
+			assert_eq!(*ls, *expect);
+		    },
+		    _ => assert!(false),
+		}
+	    }
+	} else {
+	    assert!(false);
+	}
+    }
 }
