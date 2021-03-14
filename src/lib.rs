@@ -19,9 +19,7 @@ mod test {
 
     #[test]
     fn test_parse_systemd_str() {
-	let mut dir = current_dir().unwrap();
-	dir.push("unit_files");
-	dir.push("cardano-node.service");
+	let dir = current_dir().unwrap().join("unit_files/cardano-node.service");
 	let filepath = dir.to_str().unwrap();
 	if let Ok(p) = parse(filepath) {
 	    let unit = p.get(&String::from("Unit")).unwrap();
@@ -102,9 +100,7 @@ mod test {
 
     #[test]
     fn test_parse_systemd_list() {
-	let mut dir = current_dir().unwrap();
-	dir.push("unit_files");
-	dir.push("cardano-node.service");
+	let dir = current_dir().unwrap().join("unit_files/cardano-node.service");
 	let filepath = dir.to_str().unwrap();
 	if let Ok(p) = parse(filepath) {
 	    let section = p.get(&String::from("Service")).unwrap();
