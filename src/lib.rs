@@ -1,4 +1,14 @@
+//! # Systemd Parser
+//!
+//! `systemd_parser` is a minimal parser for Systemd unit files.
+extern crate pest;
+#[macro_use]
+extern crate pest_derive;
+
 pub mod parser;
+
+pub use parser::parse;
+pub use parser::SystemdValue;
 
 #[cfg(test)]
 mod test {

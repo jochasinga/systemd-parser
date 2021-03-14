@@ -5,13 +5,19 @@ use anyhow::{Context, Result};
 
 #[derive(Parser)]
 #[grammar = "pest/systemd.pest"]
-pub struct SystemdParser;
+struct SystemdParser;
 
 #[derive(Debug, Clone)]
+/// Represents a variant type of Systemd unit file values.
 pub enum SystemdValue {
+    /// Wraps a String vector that contains multiple values for a duplicate key.
     List(Vec<String>),
+    /// Wraps a String value of a respective key in the systemd unit file.
     Str(String),
 }
+
+/// Type alias for HashMap<String, HashMap<String, SystemdValue>>.
+pub type SystemdUnit = HashMap<String, HashMap<String, SystemdValue>>;
 
 fn pre_process_map(map: &mut HashMap<String, HashMap<String, SystemdValue>>) {
     for (_, value) in map.into_iter() {
@@ -29,7 +35,30 @@ fn pre_process_map(map: &mut HashMap<String, HashMap<String, SystemdValue>>) {
     }
 }
 
-pub fn parse(name: &str) -> Result<HashMap<String, HashMap<String, SystemdValue>>> {
+/// Parses a given Systemd unit file at the given file path.
+///
+/// # Examples
+///
+/// ```
+/// use systemd_parser::{parser, parser::SystemdValue};
+///
+/// if let Ok(u) = parser::parse("./unit_files/nginx.service") {
+///     let unit = u.get(&"Unit".to_string()).unwrap();
+///     let desc = unit.get(&"Description".to_string()).unwrap();
+///     match desc {
+///         SystemdValue::Str(v) => {
+///             assert_eq!(*v, "Nginx".to_string());
+///         },
+///         _ => {
+///             assert!(false);
+///         },
+///     }
+/// } else {
+///     assert!(false);
+/// }
+///
+///```
+pub fn parse(name: &str) -> Result<SystemdUnit> {
 
     let unparsed_file = fs::read_to_string(name)
 	.with_context(|| format!("cannot read file {}", name))?;

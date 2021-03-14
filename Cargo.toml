@@ -9,3 +9,9 @@ anyhow = "1.0"
 pest = "2.0"
 pest_derive = "2.0"
 
+[lib]
+name = "systemd_parser"
+edition = "2018"
+
+
+
