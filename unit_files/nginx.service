@@ -1,6 +1,9 @@
+# This is an ignored comment
 [Unit]
+# This is an ignored comment
 Description=Nginx
 After=network-online.target
+# This is an ignored comment
 Wants=network-online.target
 
 [Service]
@@ -8,8 +11,11 @@ Type=forking
 Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/home/ec2-user/.local/bin
 ExecStart=/usr/local/sbin/nginx-runner.sh
 Restart=on-failure
+# This is an ignored comment
+# This is an ignored comment
 RestartSec=0
 KillMode=process
+# This is an ignored comment
 
 [Install]
 WantedBy=multi-user.target
