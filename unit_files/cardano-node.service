@@ -1,17 +1,23 @@
+; This is an ignored comment
 [Unit]
+; This is an ignored comment
 Description=Cardano Node
 After=network-online.target
+; This is an ignored comment
 Wants=network-online.target
 
 [Service]
 Type=simple
 Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/home/ec2-user/.local/bin
 Environment=LD_LIBRARY_PATH=/usr/local/lib
+; This is an ignored comment
 Environment=PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 ExecStart=/usr/local/sbin/relay-init.sh
 Restart=on-failure
 RestartSec=3
 KillMode=process
+; This is an ignored comment
+; This is an ignored comment
 
 [Install]
 WantedBy=multi-user.target

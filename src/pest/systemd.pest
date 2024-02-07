@@ -1,4 +1,5 @@
 WHITESPACE = _{ " " }
+COMMENT = _{ ("#" | ";") ~ (!NEWLINE ~ ANY)* ~ NEWLINE }
 char = { ASCII_ALPHANUMERIC | WHITESPACE | "." | "_" | "/" | "-"  }
 name = @{ char+ }
 value = { (char | "=" | ":" )* }
